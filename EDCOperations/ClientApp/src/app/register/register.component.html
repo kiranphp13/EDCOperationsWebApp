@@ -1,0 +1,57 @@
+<div class="container" style="padding-top:40px;">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card mx-4">
+        <div class="card-body p-4">
+
+          
+
+          <form name="form1" (ngSubmit)="register()" #f="ngForm">
+            <h1 style="text-align:center">Add User</h1>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="FullName" [(ngModel)]="model.FullName" name="FullName" required>
+            </div>
+            <div class="input-group mb-4">
+              <input type="text" class="form-control" placeholder="UserName" [(ngModel)]="model.UserName" name="UserName" required>
+            </div>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" placeholder="Password" [(ngModel)]="model.Password" name="Password" required>
+            </div>
+            <div class="input-group mb-4">
+              <input type="text" class="form-control" placeholder="Email" [(ngModel)]="model.Email" name="Email" required>
+            </div>
+
+            <div class="input-group mb-4">
+              <select [(ngModel)]="model.Role" class="form-control" placeholder="Role" required name="Role">
+                <option value="Admin" selected>Admin</option>
+                <option value="Editor">Editor</option>
+                <option value="Reader">Reader</option>
+              </select>
+            </div>
+            <div class="input-group mb-4">
+              <input type="text" class="form-control" placeholder="Contact No" [(ngModel)]="model.Phone" name="Phone">
+            </div>
+            <div class="input-group mb-4">
+              <input type="text" class="form-control" placeholder="Address" [(ngModel)]="model.Address" name="Address">
+            </div>
+            <div class="input-group mb-4">
+              <select [(ngModel)]="model.Status" class="form-control" placeholder="Status" required name="Status">
+                <option value="Active" selected >Active</option>
+                <option value="Inactive">Inactive</option>
+                
+              </select>
+            </div>
+            <div>
+              <p style="color:#E92626;font-size:20px;font-weight:normal" Class="success" align="left">
+                {{errorMessage}}
+              </p>
+            </div>
+            <button type="submit" class="btn btn-block btn-success">Add User</button>
+
+
+          </form>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
