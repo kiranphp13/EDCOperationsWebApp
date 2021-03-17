@@ -6,7 +6,7 @@
 
 
 
-          <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="editForm">
             <h1 style="text-align:center">Update User</h1>
 
             <div class="form-group">
@@ -20,8 +20,36 @@
             </div>
             <div class="form-group">
               <label for="username">Password:</label>
-              <input type="password" formControlName="password" placeholder="Password" name="password" class="form-control" id="password">
+              <!--<input type="text" formControlName="password" placeholder="Password" name="password" class="form-control" id="password">-->
+              <button (click)="openModal('modalChangePassword')">Change Password</button>
+              <jw-modal id="modalChangePassword">
+                <h1>Change Password</h1>
+                <div class="row">
+                  <div class="col-1">
 
+                  </div>
+                  <div class="col-10" align="center">
+                    <div class="form-group">
+                      <!--<label for="password">Pasword:</label>-->
+                      <input type="text" formControlName="password" placeholder="Password" name="password" class="form-control" id="password" />
+
+                    </div>
+                  </div>
+                  <div class="col-1">
+
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6" align="right">
+                    <button (click)="closeModal('modalChangePassword','Ok');" style="width:100px" class="btn btn-block btn-success">Ok</button>
+
+                  </div>
+                  <div class="col-6 text-left">
+                    <button class="btn btn-danger" style="width:100px" (click)="closeModal('modalChangePassword','Cancel');">Cancel</button>
+
+                  </div>
+                </div>
+              </jw-modal>
             </div>
             <div class="form-group">
               <label for="username">Email:</label>
@@ -56,6 +84,7 @@
                 {{errorMessage}}
               </p>
             </div>
+
           </form>
           <div class="row">
             <div class="col-6">
@@ -70,4 +99,6 @@
     </div>
   </div>
 </div>
+
+
 

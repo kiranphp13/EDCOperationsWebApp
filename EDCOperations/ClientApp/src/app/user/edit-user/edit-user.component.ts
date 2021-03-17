@@ -2,7 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from "@angular/router";
 import { User } from "src/app/models/user";
 import { AuthService } from "src/app/auth.service";
-import { FormGroup, ReactiveFormsModule, FormBuilder,  Validators } from '@angular/forms'
+import { FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms'
+import { ModalService } from 'src/app/_modal';
 
 @Component({
   selector: 'app-edit-user',
@@ -13,9 +14,9 @@ export class EditUserComponent implements OnInit {
 
   user: User;
   editForm: FormGroup;
-    errorMessage: string;  
+  errorMessage: string; initPassword: string;
 
-  constructor(private router: Router, private apiService: AuthService, private formBuilder: FormBuilder) { }
+  constructor(private router: Router, private apiService: AuthService, private formBuilder: FormBuilder, private modalService: ModalService) { }
 
   ngOnInit() {
     if (localStorage.getItem("currentUser") === null) {
@@ -33,7 +34,7 @@ export class EditUserComponent implements OnInit {
     else {
       this.apiService.getUser(userId)
         .subscribe(data => {
-          //this.user = data;
+          this.user = data;
           this.editForm.setValue(data);
 
         });
@@ -51,24 +52,41 @@ export class EditUserComponent implements OnInit {
       token: ['', Validators.required]
     });
   }
+  openModal(id: string) {
 
+    this.modalService.open(id);
+  }
+
+  closeModal(id: string, status: string) {
+    if (status === 'Ok') {
+      this.modalService.close(id);
+      //this.editForm.controls['password'].setValue(selected.id);
+
+    }
+
+    else {
+      this.editForm.setValue(this.user);
+      this.modalService.close(id);
+    }
+
+  }
   onSubmit() {
     this.apiService.updateUser(this.editForm.value)
-       
+
       .subscribe(
         data => {
           if (data.Status === "Success") {
             alert('User updated successfully.');
             this.router.navigate(['listuser']);
           } else {
-              this.errorMessage = data.Message;
+            this.errorMessage = data.Message;
           }
         },
         error => {
-            this.errorMessage = error.Message;
+          this.errorMessage = error.Message;
         });
   }
-    onCancel() {
-        this.router.navigate(['listuser']);
-    }
+  onCancel() {
+    this.router.navigate(['listuser']);
+  }
 }

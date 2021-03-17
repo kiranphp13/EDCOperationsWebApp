@@ -24,7 +24,8 @@ import { AddUserComponent } from './user/add-user/add-user.component';
 import { EditUserComponent } from './user/edit-user/edit-user.component';
 import { AggridUserComponent } from './user/aggrid-user/aggrid-user.component';
 import { AgGridModule } from 'ag-grid-angular';
- 
+import { ModalModule } from './_modal';
+
 
 
 
@@ -65,7 +66,7 @@ import { AgGridModule } from 'ag-grid-angular';
     HttpClientModule,
     FormsModule, ReactiveFormsModule,
     AgGridModule.withComponents([]),
-
+    ModalModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },

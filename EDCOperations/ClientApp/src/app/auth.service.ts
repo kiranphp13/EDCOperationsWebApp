@@ -57,7 +57,10 @@ export class AuthService {
     return this.http.post<any>(this.url + 'User/UpdateUser', model, { headers: this.header })
   }
  
-
+  updateProfile(model: any) {
+    //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    return this.http.post<any>(this.url + 'User/UpdateProfile', model, { headers: this.header })
+  }
   deleteUser(userid: string): Observable<number> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     return this.http.delete<number>(this.url + '/DeleteUser?id=' + userid, httpOptions);
