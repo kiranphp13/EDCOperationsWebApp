@@ -13,8 +13,11 @@ import { AuthService } from "src/app/auth.service";
 export class ListUserComponent implements OnInit {
 
   users: User[];
-
+  isNotReader: boolean;
   constructor(private router: Router, private apiService: AuthService) { }
+
+
+
 
   ngOnInit() {
     //if (!window.localStorage.getItem('token')) {
@@ -24,9 +27,14 @@ export class ListUserComponent implements OnInit {
     if (localStorage.getItem("currentUser") === null) {
       this.router.navigate(['login'])
     }
-    else if (localStorage.getItem("currentUserRole") !== "Admin") {
-      this.router.navigate(['notauthorized'])
+
+    if (localStorage.getItem("currentUserRole") === "Reader") {
+      this.isNotReader= false;
     }
+    else {
+      this.isNotReader= true;
+    }
+   
     this.apiService.getUsers()
       .subscribe(data => {
         this.users = data;
@@ -45,7 +53,11 @@ export class ListUserComponent implements OnInit {
     localStorage.setItem("editUserId", user.id.toString());
     this.router.navigate(['edituser']);
   };
-
+  viewUser(user: User): void {
+    localStorage.removeItem("editUserId");
+    localStorage.setItem("editUserId", user.id.toString());
+    this.router.navigate(['viewuser']);
+  };
   addUser(): void {
     this.router.navigate(['adduser']);
   };

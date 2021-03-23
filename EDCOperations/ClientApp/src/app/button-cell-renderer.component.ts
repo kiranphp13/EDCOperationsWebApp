@@ -9,7 +9,7 @@ import { ICellRendererParams, IAfterGuiAttachedParams } from 'ag-grid-community'
 @Component({
   selector: 'btn-cell-renderer',
   template: `
-    <button (click)="btnClickedHandler($event)" class="btn btn-block btn-success" style="width:60px">{{label}}</button>
+    <button (click)="btnClickedHandler($event)" class="btn btn-primary" style="width:70px">{{label}}</button>
 
   `,
 })

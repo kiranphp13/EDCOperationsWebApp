@@ -1,11 +1,11 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
 import { Router } from "@angular/router";
 import { User } from "src/app/models/user";
 import { AuthService } from "src/app/auth.service";
-
+import { Observable } from "rxjs/index";
 
 
 function actionCellRenderer(params) {
@@ -34,7 +34,10 @@ class DataTablesResponse {
     private gridApi;
     private gridColumnApi;
 
-     
+    //@ViewChild('dataTable', { static: true }) table: { nativeElement: any; };
+    dataTable: any;
+    //dtOptions: any;
+
     private defaultColDef;
     private defaultColGroupDef;
     private columnTypes;
@@ -42,7 +45,8 @@ class DataTablesResponse {
     users: User[];
     dtOptions: DataTables.Settings = {};
     dtTrigger: Subject<any> = new Subject<any>();
-
+    isNotReader: boolean;
+      data: any;
    
     constructor(private router: Router, private apiService: AuthService, private http: HttpClient) {
       
@@ -56,40 +60,57 @@ class DataTablesResponse {
       if (localStorage.getItem("currentUser") === null) {
         this.router.navigate(['login'])
       }
-      else if (localStorage.getItem("currentUserRole") !== "Admin") {
-        this.router.navigate(['notauthorized'])
-      }
+     
       const that = this;
 
       this.dtOptions = {
         pagingType: 'full_numbers',
-        pageLength: 2
+        pageLength: 5,
       };
+
+      if (localStorage.getItem("currentUserRole") === "Reader") {
+        this.isNotReader = false;
+      }
+      else {
+        this.isNotReader = true;
+      }
       this.apiService.getUsers()
         .subscribe(data => {
           this.users = data;
           this.dtTrigger.next();
         });
+      //this.dtOptions.ajax = (callback) => {
+      //  //pass the data parameter to your service to access necessary paging info
+      //  this.apiService.getUsers()
+      //    .subscribe(resp => {
+      //      that.data = resp.data;
+      //      callback(
+      //        data: []
+      //      )
+      //      console.log(that.data);
+
+      //    });
+
+
+      //}
       //this.dtOptions = {
       //  pagingType: 'full_numbers',
       //  pageLength: 2,
       //  serverSide: true,
       //  processing: true,
-      //  ajax: (dataTablesParameters: any, callback) => {
-      //    this.http.get<User[]>('http://localhost:58639/api/'+ 'User/GetUsers').subscribe(resp => {
-      //      that.users = resp;
-
-      //        callback({
-      //          //recordsTotal: resp.recordsTotal,
-      //          //recordsFiltered: resp.recordsFiltered,
-      //          data: []
-      //        });
-      //      });
+      //  "ajax": {
+      //    url: 'http://localhost:58639/api/User/GetUsers',
+      //    type: 'GET'
+         
       //  },
+        
       //  columns: [{ data: 'id' }, { data: 'fullName' }, { data: 'userName' }, { data: 'role' }, { data: 'email' }, { data: 'phone' }, { data: 'address' }, { data: 'status' }]
       //};
-     
+      //this.dataTable = $(this.table.nativeElement);
+      //this.dataTable.DataTable(this.dtOptions);
     }
+    
+    
     ngOnDestroy(): void {
       // Do not forget to unsubscribe the event
       this.dtTrigger.unsubscribe();
@@ -108,7 +129,16 @@ class DataTablesResponse {
       this.router.navigate(['edituser']);
        
     }
-
+    editUser(user: User): void {
+      localStorage.removeItem("editUserId");
+      localStorage.setItem("editUserId", user.id.toString());
+      this.router.navigate(['edituser']);
+    };
+    viewUser(user: User): void {
+      localStorage.removeItem("editUserId");
+      localStorage.setItem("editUserId", user.id.toString());
+      this.router.navigate(['viewuser']);
+    };
     //rowData = [
     //  { make: 'Toyota', model: 'Celica', price: 35000 },
     //  { make: 'Ford', model: 'Mondeo', price: 32000 },

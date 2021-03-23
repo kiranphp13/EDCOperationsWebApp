@@ -35,19 +35,19 @@
     <a class="nav-link text-dark" [routerLink]="['/register']">Register</a>
   </li>-->
           <!-- Admin only -->
-          <li class="nav-item" *ngIf="isAdmin || isAuthorized">
+          <li class="nav-item" *ngIf="isAuthorized">
             <a class="nav-link text-dark" [routerLink]="['dashboard']">Dashboard</a>
           </li>
-          <!--<li class="nav-item" *ngIf="isAdmin">
+          <li class="nav-item" *ngIf="isAuthorized">
     <a class="nav-link text-dark" [routerLink]="['listuser']">Users (Classic)</a>
-  </li>-->
-          <li class="nav-item" *ngIf="isAdmin">
-            <a class="nav-link text-dark" [routerLink]="['aggriduser']">Users (ag Grid)</a>
+  </li>
+          <li class="nav-item" *ngIf="isAuthorized">
+            <a class="nav-link text-dark" [routerLink]="['aggriduser']"> Users (ag Grid)</a>
           </li>
-          <!--li class="nav-item" *ngIf="isAdmin">
+          <li class="nav-item" *ngIf="isAuthorized">
     <a class="nav-link text-dark" [routerLink]="['aduser']">Users (ad Grid)</a>
   </li>
-  <li class="nav-item" *ngIf="isAdmin">
+  <!--<li class="nav-item" *ngIf="isAdmin">
     <a class="nav-link text-dark" [routerLink]="['ngxuser']">Users (ngx Grid)</a>
   </li>-->
           <!--<li class="nav-item" *ngIf="isAdmin || isAuthorized">
