@@ -16,7 +16,8 @@ import { HttpHeaders } from '@angular/common/http';
 export class AuthService {
   isLogin = false;
   roleAs: string;
-  url: string = 'http://localhost:58639/api/';
+  //url: string = 'http://localhost:58639/api/';
+  url: string = 'http://13.68.254.40/EDCWebAPI/api/';
   header: any;
   constructor(private router: Router, private LoginService: LoginService, private http: HttpClient) {
     const headerSettings: { [name: string]: string | string[]; } = {};

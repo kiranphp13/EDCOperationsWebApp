@@ -30,7 +30,7 @@ export class BtnCellRenderer implements ICellRendererAngularComp, OnDestroy {
     afterGuiAttached?(params?: IAfterGuiAttachedParams): void {
         throw new Error('Method not implemented.');
     }
-  btnClickedHandler() {
+  btnClickedHandler(params) {
     this.params.clicked(this.params.value);
     localStorage.removeItem("editUserId");
     localStorage.setItem("editUserId", this.params.value);

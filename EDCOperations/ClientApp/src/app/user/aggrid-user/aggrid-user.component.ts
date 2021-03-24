@@ -155,11 +155,11 @@ export class AggridUserComponent implements OnInit {
   rowDataClicked1 = {};
   rowDataClicked2 = {};
   isReader: boolean;
-  private defaultColDef;
+  public defaultColDef;
   private defaultColGroupDef;
   private columnTypes;
   private rowData: [];
-  private columnDefs;
+  public columnDefs;
   users: User[];
   private gridApi;
   private gridColumnApi;
