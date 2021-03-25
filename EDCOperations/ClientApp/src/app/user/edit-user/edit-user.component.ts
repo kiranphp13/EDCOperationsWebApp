@@ -49,7 +49,9 @@ export class EditUserComponent implements OnInit {
       status: ['', Validators.required],
       role: ['', Validators.required],
       phone: ['', Validators.required],
-      token: ['', Validators.required]
+      token: ['', Validators.required],
+      createdDate: ['', Validators.required]
+     
     });
   }
   openModal(id: string) {
