@@ -52,6 +52,10 @@ var dateFilterParams = {
   closeOnApply: true
 };
 
+var stdFilterParams = {
+  buttons: ['apply', 'reset'],
+  closeOnApply: true
+}
 
 
 
@@ -212,19 +216,25 @@ export class AggridUserComponent implements OnInit {
     //let filterInstance = this.gridOptions.api.getFilterInstance("name_col");
 
     if (localStorage.getItem("currentUserRole") === "Reader") {
-      this.columnDefs = [{ field: 'id', width: '80',sortable: true, filter: true },
-      { field: 'fullName', sortable: true, filter: true, width: '150' },
-      { field: 'userName', sortable: true, filter: true, width: '120' },     
-      { field: 'email', sortable: true, filter: true, width: '150' },
-      { field: 'phone', sortable: true, filter: true, width: '120' },
-        { field: 'address', sortable: true, filter: true, width: '150' },
-        { field: 'role', sortable: true, filter: true, width: '100' },
-        { field: 'status', sortable: true, filter: true, width: '100' },
+      this.columnDefs = [
+        {
+          field: 'id', width: '80', sortable: true, filter: 'agNumberColumnFilter',
+          filterParams: numberFilterParams
+        },
+        { field: 'fullName', sortable: true, filter: true, width: '120', filterParams: dateFilterParams },
+        { field: 'userName', sortable: true, filter: true, width: '120', filterParams: dateFilterParams },
+        { field: 'email', sortable: true, filter: true, width: '120', filterParams: dateFilterParams },
+        { field: 'phone', sortable: true, filter: true, width: '120', filterParams: dateFilterParams },
+        { field: 'address', sortable: true, filter: true, width: '120', filterParams: dateFilterParams },
+        { field: 'role', sortable: true, filter: true, width: '100', filterParams: dateFilterParams },
+        { field: 'status', sortable: true, filter: true, width: '100', filterParams: dateFilterParams },
         {
           field: 'createdDate', sortable: true, width: '150', filter: 'agDateColumnFilter', filterParams: dateFilterParams,
           cellRenderer: (data) => {
-            return data.value ? (new Date(data.value)).toLocaleDateString() : '';
-          }},
+            return dateFormatter(data.value);
+          }
+
+        },
       {
         field: 'id',
         
@@ -247,13 +257,13 @@ export class AggridUserComponent implements OnInit {
       this.columnDefs = [{
         field: 'id', width: '80', sortable: true, filter: 'agNumberColumnFilter',
         filterParams: numberFilterParams},
-      { field: 'fullName', sortable: true, filter: true, width: '120' },
-      { field: 'userName', sortable: true, filter: true, width: '120' },      
-      { field: 'email', sortable: true, filter: true, width: '120' },
-      { field: 'phone', sortable: true, filter: true, width: '120' },
-        { field: 'address', sortable: true, filter: true, width: '120' },
-        { field: 'role', sortable: true, filter: true, width: '100' },
-        { field: 'status', sortable: true, filter: true, width: '100' },
+        { field: 'fullName', sortable: true, filter: true, width: '120',filterParams: dateFilterParams },
+        { field: 'userName', sortable: true, filter: true, width: '120',filterParams: dateFilterParams },
+        { field: 'email', sortable: true, filter: true, width: '120', filterParams: dateFilterParams },
+        { field: 'phone', sortable: true, filter: true, width: '120', filterParams: dateFilterParams },
+        { field: 'address', sortable: true, filter: true, width: '120', filterParams: dateFilterParams },
+        { field: 'role', sortable: true, filter: true, width: '100', filterParams: dateFilterParams },
+        { field: 'status', sortable: true, filter: true, width: '100', filterParams: dateFilterParams },
         {
           field: 'createdDate', sortable: true, width: '150', filter: 'agDateColumnFilter', filterParams: dateFilterParams,
           cellRenderer: (data) => {

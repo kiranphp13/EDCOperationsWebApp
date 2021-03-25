@@ -5,46 +5,50 @@
     </div>
   </div>
   <div class="row">
-    </div>
-    <div class="row">
+  </div>
+  <div class="row">
+    <div class="col-md-12">
       <button class="btn btn-block btn-success" style="width:100px" (click)="addUser()"> Add User</button>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <table class="table table-striped" width="100%">
-          <thead>
-            <tr>
-              <th class="hidden">Id</th>
-              <th>Full Name</th>
-              <th>User Name</th>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped" width="100%" style="margin-top:5px">
+        <thead>
+          <tr>
+            <th class="hidden">Id</th>
+            <th>Full Name</th>
+            <th>User Name</th>
 
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Address</th>
-              <th>Role</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of users">
-              <td class="hidden">{{user.id}}</td>
-              <td>{{user.fullName}}</td>
-              <td>{{user.userName}}</td>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td class="hidden">{{user.id}}</td>
+            <td>{{user.fullName}}</td>
+            <td>{{user.userName}}</td>
 
-              <td>{{user.email}}</td>
-              <td>{{user.phone}}</td>
-              <td>{{user.address}}</td>
-              <td>{{user.role}}</td>
-              <td>{{user.status}}</td>
-              <td *ngIf="isNotReader">
-                <button class="btn btn-primary px-4" (click)="editUser(user)">Edit</button>
-              </td>
-              <td>
-                <button class="btn btn-primary px-4" (click)="viewUser(user)">View</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            <td>{{user.email}}</td>
+            <td>{{user.phone}}</td>
+            <td>{{user.address}}</td>
+            <td>{{user.role}}</td>
+            <td>{{user.status}}</td>
+            <td *ngIf="isNotReader">
+              <button class="btn btn-primary px-4" (click)="editUser(user)">Edit</button>
+            </td>
+            <td>
+              <button class="btn btn-primary px-4" (click)="viewUser(user)">View</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</div>

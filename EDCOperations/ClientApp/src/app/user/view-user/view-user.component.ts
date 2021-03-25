@@ -22,9 +22,9 @@ export class ViewUserComponent implements OnInit {
     if (localStorage.getItem("currentUser") === null) {
       this.router.navigate(['login'])
     }
-    else if (localStorage.getItem("currentUserRole") !== "Admin") {
-      this.router.navigate(['notauthorized'])
-    }
+    //else if (localStorage.getItem("currentUserRole") !== "Admin") {
+    //  this.router.navigate(['notauthorized'])
+    //}
     let userId = localStorage.getItem("editUserId");
     if (!userId) {
       alert("Invalid action.")
