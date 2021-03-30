@@ -60,6 +60,7 @@ class DataTablesResponse {
       if (localStorage.getItem("currentUser") === null) {
         this.router.navigate(['login'])
       }
+      $("#DataTables_Table_0_filter").hide();
      
       const that = this;
 

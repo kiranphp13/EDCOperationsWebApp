@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, Input } from '@angular/core';
 import { Router } from "@angular/router";
 import { User } from "src/app/models/user";
 import { AuthService } from "src/app/auth.service";
@@ -78,6 +78,7 @@ function myColumnWidthCallback(params) {
   }
   return 30;
 }
+
 function getParams() {
   return {
     suppressQuotes: getValue('none'),
@@ -153,7 +154,7 @@ function getValue(text) {
   templateUrl: './aggrid-user.component.html',
   styleUrls: ['./aggrid-user.component.css']
 })
-export class AggridUserComponent implements OnInit {
+export class AggridUserComponent implements OnInit , Input{
 
   frameworkComponents: any;
   rowDataClicked1 = {};
@@ -168,13 +169,14 @@ export class AggridUserComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
   isAdmin: boolean;
+  
 
   constructor(private router: Router, private apiService: AuthService) {
     this.frameworkComponents = {
       btnCellRenderer: BtnCellRenderer
 
     }
-    this.defaultColDef = { resizable: true };
+    this.defaultColDef = { resizable: true, };
 
   }
 
@@ -215,19 +217,19 @@ export class AggridUserComponent implements OnInit {
     //};
   //  this.agGrid.columnApi.setColumnsVisible(['model'], false);
     //let filterInstance = this.gridOptions.api.getFilterInstance("name_col");
-
+    
     if (localStorage.getItem("currentUserRole") !== "Admin") {
       this.isAdmin = false;
       this.columnDefs = [
         {
-          field: 'id', width: '120', sortable: true, filter: 'agNumberColumnFilter',
+          field: 'id', width: '80', sortable: true, filter: 'agNumberColumnFilter',
           filterParams: numberFilterParams
         },
         { field: 'fullName', sortable: true, filter: true, width: '120', filterParams: dateFilterParams },
         { field: 'userName', sortable: true, filter: true, width: '120', filterParams: dateFilterParams },
-        { field: 'email', sortable: true, filter: true, width: '150', filterParams: dateFilterParams },
+        { field: 'email', sortable: true, filter: true, width: '170', filterParams: dateFilterParams },
         { field: 'phone', sortable: true, filter: true, width: '120', filterParams: dateFilterParams },
-        { field: 'address', sortable: true, filter: true, width: '150', filterParams: dateFilterParams },
+        { field: 'address', sortable: true, filter: true, width: '170', filterParams: dateFilterParams },
         { field: 'role', sortable: true, filter: true, width: '100', filterParams: dateFilterParams },
         { field: 'status', sortable: true, filter: true, width: '100', filterParams: dateFilterParams },
         {
@@ -327,7 +329,11 @@ export class AggridUserComponent implements OnInit {
   }
 
     
+  onBtSearch() {
+    //gridOptions.api.setQuickFilter(document.getElementById('filter-text-box').value);
+    this.gridApi.setQuickFilter(document.getElementById('filter-text-box').value);
 
+  }
     
 
    
