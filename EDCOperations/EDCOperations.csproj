@@ -37,6 +37,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\app\administration\administration-routing.module.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\administration\contact-types\add-edit.component.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\administration\contact-types\renderer\button-renderer.component.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\services\contact-type.service.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\user\view-user\view-user.component.spec.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\user\view-user\view-user.component.ts" />
   </ItemGroup>
@@ -91,6 +95,7 @@
   <ItemGroup>
     <Folder Include="ClientApp\src\app\collaterals\" />
     <Folder Include="ClientApp\src\app\associations\" />
+    <Folder Include="ClientApp\src\app\NewFolder\" />
     <Folder Include="ClientApp\src\app\userrole\" />
     <Folder Include="ClientApp\src\app\userstatus\" />
   </ItemGroup>
