@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AddEditComponent } from './contact-types/add-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // ag-grid
 import { AgGridModule } from 'ag-grid-angular';
 import { ButtonRendererComponent } from './contact-types/renderer/button-renderer.component';
@@ -18,7 +19,8 @@ import { ButtonRendererComponent } from './contact-types/renderer/button-rendere
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AgGridModule.withComponents([ButtonRendererComponent])
+    AgGridModule.withComponents([ButtonRendererComponent]),
+    NgbModule
   ]
 })
 export class AdministrationModule { }

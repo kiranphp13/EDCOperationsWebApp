@@ -1,48 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ContactTypeService } from '../../services/contact-type.service';
+import { ContactTypeService } from '../services/contact-type.service';
 import { ButtonRendererComponent } from './renderer/button-renderer.component';
-
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-contact-types',
   templateUrl: './contact-types.component.html',
-  styleUrls: ['./contact-types.component.css']
+  styleUrls: ['./contact-types.component.css'],
+  providers: [DatePipe]
 })
 export class ContactTypesComponent implements OnInit {
-
+  // @ts-ignore
+  @ViewChild('view_record', {}) viewRecordElmRef: ElementRef;
   records;
   private gridApi;
   private gridColumnApi;
-
   private columnDefs;
   private defaultColDef;
   private rowData: any;
   frameworkComponents: any;
+  closeResult = '';
+  context: any;
+  pageSize = 10;
+  _record;
 
-  constructor(private http: HttpClient, private contactTypeService: ContactTypeService) {
+  constructor(private http: HttpClient, private contactTypeService: ContactTypeService, private modalService: NgbModal, private datePipe:DatePipe) {
+
+    this.context = {
+      componentParent: this
+    };
 
     this.frameworkComponents = {
       buttonRenderer: ButtonRendererComponent,
-    }
+    };
+
     this.columnDefs = [
       {
-        field: 'id'
-
+        field: 'id',
+        headerName: '#',
       },
       {
-        field: 'type'
-     
+        field: 'type',
+        headerName: 'Name',
       },
       {
-        field: 'description'
-      
+        field: 'description',
+        headerName: 'Description',
       },
       {
-        field: 'updatedBy'
+        field: 'updatedBy',
+        headerName: 'Updated By',
       },
       {
-        field: 'updatedAt'
+        field: 'updateDate',
+        headerName: 'Last Modified',
+        cellRenderer: (params) => {
+          //return params.data.updateDate;
+          return this.datePipe.transform( params.data.updateDate,'yyyy-MM-dd  h:mm:ss');
+        }
       },
       {
         headerName: 'Action(s)',
@@ -62,7 +79,7 @@ export class ContactTypesComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
   onGridReady(params) {
@@ -81,4 +98,47 @@ export class ContactTypesComponent implements OnInit {
       }); */
   }
 
+
+  viewRecord(id){
+    this.contactTypeService.getById(id).subscribe((data) => {
+      console.log(data);
+      this._record = data;
+
+      this.modalService.open(this.viewRecordElmRef, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    });
+  }
+
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  onBtCSVExport() {
+    const params = {
+      columnKeys: ['id', 'type', 'description', 'updatedBy', 'updatedAt'],
+      fileName: 'Contact Types'
+    };
+    this.gridApi.exportDataAsCsv(params);
+  }
+
+  onPageSizeChanged() {
+    this.gridApi.paginationSetPageSize(Number(this.pageSize));
+  }
 }
