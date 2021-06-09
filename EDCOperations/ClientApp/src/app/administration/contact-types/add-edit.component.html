@@ -1,48 +1,51 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+
+    <div class="col-md-6">
+      <p *ngIf="loader"><ngb-progressbar type="success" [value]="100" [striped]="true">Please Wait..</ngb-progressbar></p>
       <h2 *ngIf="isAddMode">Add Contact Type</h2>
       <h2 *ngIf="!isAddMode">Edit Contact Type</h2>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-       
+
 
         <div class="form-row">
           <div class="form-group col">
-            <label>Name</label>
+            <label>Name<span style="color:red">*</span> :</label>
             <input type="text" maxlength="6" formControlName="type" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.type.errors }" />
+            <small class="text-muted text-small"> Max 6 characters limit</small>
             <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
               <div *ngIf="f.type.errors.required">Type Name is required</div>
 
             </div>
-            
+
           </div>
 
-         
+
 
         </div>
 
         <div class="form-row">
           <div class="form-group col">
-            <label>Description</label>
+            <label>Description<span style="color:red">*</span> :</label>
             <input type="text" maxlength="25" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+            <small class="text-muted"> Max 25 characters limit</small>
             <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
               <div *ngIf="f.description.errors.required">Description is required</div>
             </div>
           </div>
 
-          
+
 
         </div>
 
 
 
         <div class="form-group">
-           &nbsp;
           <button [disabled]="loading" class="btn btn-primary">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Save
           </button>
-          <a routerLink="/contact-types" class="btn btn-link">Cancel</a>
+          <a routerLink="/administration/contact-types" class="btn btn-link">Cancel</a>
         </div>
       </form>
 

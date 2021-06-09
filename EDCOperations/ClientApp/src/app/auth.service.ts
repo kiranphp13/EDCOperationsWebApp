@@ -7,8 +7,10 @@ import { LoginService } from './login.service';
 
 import { Observable } from "rxjs/index";
 import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';  
+import { HttpHeaders } from '@angular/common/http';
 
+import {environment} from '../environments/environment';
+const baseUrl = `${environment.apiUrl}`;
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +24,7 @@ export class AuthService {
   constructor(private router: Router, private LoginService: LoginService, private http: HttpClient) {
     const headerSettings: { [name: string]: string | string[]; } = {};
     this.header = new HttpHeaders(headerSettings);}
-  
+
 
   isAuthorized() {
     if (localStorage.getItem("currentUser") === null) {
@@ -57,73 +59,73 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.url + 'User/GetUsers');
+    return this.http.get<User[]>(baseUrl + '/User/GetUsers');
   }
   getUser(userId: string): Observable<User> {
-    return this.http.get<User>(this.url + 'User/GetUser/' + userId);
+    return this.http.get<User>(baseUrl + '/User/GetUser/' + userId);
   }
   getRoles(): Observable<any> {
-    return this.http.get<any>(this.url + 'User/GetRoles');
+    return this.http.get<any>(baseUrl + '/User/GetRoles');
   }
   getStatus(): Observable<any> {
-    return this.http.get<any>(this.url + 'User/GetStatus');
+    return this.http.get<any>(baseUrl + '/User/GetStatus');
   }
- 
+
   createUser(model: any) {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'User/CreateUser', model, { headers: this.header })
+    return this.http.post<any>(baseUrl + '/User/CreateUser', model, { headers: this.header })
   }
   updateUser(model: any) {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'User/UpdateUser', model, { headers: this.header })
+    return this.http.post<any>(baseUrl + '/User/UpdateUser', model, { headers: this.header })
   }
   createAssociation(model: any) {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'User/CreateUser', model, { headers: this.header })
+    return this.http.post<any>(baseUrl + '/User/CreateUser', model, { headers: this.header })
   }
   updateAssociation(model: any) {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'User/UpdateUser', model, { headers: this.header })
+    return this.http.post<any>(baseUrl + '/User/UpdateUser', model, { headers: this.header })
   }
   createContactType(model: any) {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'User/CreateUser', model, { headers: this.header })
+    return this.http.post<any>(baseUrl + '/User/CreateUser', model, { headers: this.header })
   }
   updateContactType(model: any) {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'User/UpdateUser', model, { headers: this.header })
+    return this.http.post<any>(baseUrl + '/User/UpdateUser', model, { headers: this.header })
   }
   createCollateral(model: any) {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'User/CreateUser', model, { headers: this.header })
+    return this.http.post<any>(baseUrl + '/User/CreateUser', model, { headers: this.header })
   }
   updateCollateral(model: any) {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'User/UpdateUser', model, { headers: this.header })
+    return this.http.post<any>(baseUrl + '/User/UpdateUser', model, { headers: this.header })
   }
   createUserStatus(model: any) {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'User/CreateUser', model, { headers: this.header })
+    return this.http.post<any>(baseUrl + '/User/CreateUser', model, { headers: this.header })
   }
   updateUserStatus(model: any) {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'User/UpdateUser', model, { headers: this.header })
+    return this.http.post<any>(baseUrl + '/User/UpdateUser', model, { headers: this.header })
   }
   createUserRole(model: any) {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'User/CreateUser', model, { headers: this.header })
+    return this.http.post<any>(baseUrl + '/User/CreateUser', model, { headers: this.header })
   }
   updateUserRole(model: any) {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'User/UpdateUser', model, { headers: this.header })
+    return this.http.post<any>(baseUrl + '/User/UpdateUser', model, { headers: this.header })
   }
- 
+
   updateProfile(model: any) {
     //const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'User/UpdateProfile', model, { headers: this.header })
+    return this.http.post<any>(baseUrl + '/User/UpdateProfile', model, { headers: this.header })
   }
   deleteUser(userid: string): Observable<number> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     return this.http.delete<number>(this.url + '/DeleteUser?id=' + userid, httpOptions);
-  }  
+  }
 }

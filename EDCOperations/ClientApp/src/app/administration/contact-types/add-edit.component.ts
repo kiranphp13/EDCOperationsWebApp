@@ -1,24 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
-import { ContactTypeService } from '../../services/contact-type.service';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {AbstractControlOptions, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {first} from 'rxjs/operators';
+import {ContactTypeService} from '../services/contact-type.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
-@Component({ templateUrl: 'add-edit.component.html' })
+@Component({templateUrl: 'add-edit.component.html'})
 export class AddEditComponent implements OnInit {
   form!: FormGroup;
   id!: string;
   isAddMode!: boolean;
   loading = false;
   submitted = false;
+  loader = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private contactTypeService: ContactTypeService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.getContactTypeRecords();
@@ -29,17 +31,32 @@ export class AddEditComponent implements OnInit {
     this.form = this.formBuilder.group({
       type: ['', Validators.required],
       description: ['', Validators.required]
-      
+
     });
 
     if (!this.isAddMode) {
+      this.loader = true;
+      // this.contactTypeService.getById(this.id)
+      //   .subscribe(x => this.form.patchValue(x));
+
+      // this.contactTypeService.getById(this.id)
+      //   .subscribe((data) => ({
+      //     this.form.patchValue(data);
+      //   }));
+
       this.contactTypeService.getById(this.id)
-        .subscribe(x => this.form.patchValue(x));
+        .subscribe(data => {
+          this.loader = false;
+          this.form.patchValue(data);
+        });
+
     }
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.form.controls; }
+  get f() {
+    return this.form.controls;
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -52,7 +69,7 @@ export class AddEditComponent implements OnInit {
     this.loading = true;
     if (this.isAddMode) {
       this.createRecord();
-      
+
     } else {
       //TODO Update
       this.updateRecord();
@@ -63,6 +80,13 @@ export class AddEditComponent implements OnInit {
   private createRecord() {
     let value = this.form.get('type').value;
 
+    const body = {
+      type: this.form.get('type').value,
+      description: this.form.get('description').value,
+      updatedByUserId: localStorage.getItem('currentUserId')
+    };
+
+
     if (this.contactTypes.get(value)) {
       Swal.fire({
         icon: 'error',
@@ -72,30 +96,37 @@ export class AddEditComponent implements OnInit {
       return false;
 
     } else {
-      this.contactTypeService.create(this.form.value)
+      this.contactTypeService.create(body)
         .pipe(first())
         .subscribe(() => {
-          Swal.fire('Record Added Successfully');
+          Swal.fire('Record added successfully.');
           //this.alertService.success('Record added', { keepAfterRouteChange: true });
-          this.router.navigate(['/contact-types']);
+          this.router.navigate(['/administration/contact-types']);
         })
         .add(() => this.loading = false);
     }
   }
 
   private updateRecord() {
-    this.contactTypeService.update(this.id, this.form.value)
+    const body = {
+      type: this.form.get('type').value,
+      description: this.form.get('description').value,
+      updatedByUserId: localStorage.getItem('currentUserId')
+    };
+
+    this.contactTypeService.update(this.id, body)
       .pipe(first())
       .subscribe(() => {
-        Swal.fire('Record Updated Successfully');
+        Swal.fire('Record updated successfully.');
         //this.alertService.success('Record added', { keepAfterRouteChange: true });
-        this.router.navigate(['/contact-types']);
+        this.router.navigate(['/administration/contact-types']);
       })
       .add(() => this.loading = false);
   }
 
   contactTypes = new Map();
   _contactTypes: any;
+
   getContactTypeRecords() {
     this.contactTypeService.getAll()
       .subscribe(data => {
