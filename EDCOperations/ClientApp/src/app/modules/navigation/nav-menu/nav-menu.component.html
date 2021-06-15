@@ -81,15 +81,17 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false">
             Administration
-
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['administration/edc-users']">EDC Users</a></li>
+            <li><a class="dropdown-item" [routerLink]="['administration/user-roles']">User Roles</a></li>
+            <li><a class="dropdown-item" [routerLink]="['administration/user-statuses']">User Statuses</a></li>
+            <hr>
             <li><a class="dropdown-item" [routerLink]="['administration/contact-types']">Contact Types</a></li>
             <li><a class="dropdown-item" [routerLink]="['administration/collaterals']">Collaterals</a></li>
             <li><a class="dropdown-item" [routerLink]="['administration/associations']">Associations</a></li>
-            <li><a class="dropdown-item" [routerLink]="['userstatus']">User Status</a></li>
-            <li><a class="dropdown-item" [routerLink]="['userrole']">EDC User Roles</a></li>
+
+
           </ul>
         </li>
 

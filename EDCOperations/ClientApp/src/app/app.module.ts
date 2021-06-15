@@ -23,6 +23,7 @@ import {SharedModule} from './shared/shared.module';
 import {AdministrationModule} from './modules/administration/administration.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     ResetPasswordComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     NgxSpinnerModule,
     FlexLayoutModule,
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -45,6 +47,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     ModalModule, DataTablesModule, NgxDatatableModule,
     AdministrationModule,
     SharedModule,
+    // TODO : Move below components to Feature Module (PagesModule)
     RouterModule.forRoot([
       {path: '', component: LoginComponent, pathMatch: 'full'},
       {path: 'login', component: LoginComponent},

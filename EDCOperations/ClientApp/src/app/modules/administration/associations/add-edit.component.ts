@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {AbstractControlOptions, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {ContactTypeService} from '../services/contact-type.service';
+import { AssociationService } from '../services/association.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -19,29 +19,26 @@ export class AddEditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private contactTypeService: ContactTypeService,
+    private associationService: AssociationService,
     private spinnerService: NgxSpinnerService
   ) {
   }
 
   ngOnInit() {
-    this.getContactTypeRecords();
     this.id = this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
-
     this.form = this.formBuilder.group({
-      type: ['', Validators.required],
+      name: ['', Validators.required],
       description: ['', Validators.required]
     });
 
     if (!this.isAddMode) {
       this.spinnerService.show();
-      this.contactTypeService.getById(this.id)
+      this.associationService.getById(this.id)
         .subscribe(data => {
           this.spinnerService.hide();
           this.form.patchValue(data);
         });
-
     }
   }
 
@@ -52,7 +49,6 @@ export class AddEditComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
     // stop here if form is invalid
     if (this.form.invalid) {
       return;
@@ -61,22 +57,20 @@ export class AddEditComponent implements OnInit {
     this.loading = true;
     if (this.isAddMode) {
       this.createRecord();
+
     } else {
       this.updateRecord();
-
-    }
+   }
   }
 
   private createRecord() {
-    let value = this.form.get('type').value;
-
     const body = {
-      type: this.form.get('type').value,
+      name: this.form.get('name').value,
       description: this.form.get('description').value,
       updatedByUserId: localStorage.getItem('currentUserId')
     };
 
-    this.contactTypeService.create(body)
+    this.associationService.create(body)
       .pipe(first())
       .subscribe((data) => {
 
@@ -90,7 +84,7 @@ export class AddEditComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           });
-          this.router.navigate(['/administration/contact-types']);
+          this.router.navigate(['/administration/associations']);
         } else {
           Swal.fire({
             icon: 'error',
@@ -105,12 +99,12 @@ export class AddEditComponent implements OnInit {
   private updateRecord() {
     if (this.form.dirty) {
       const body = {
-        type: this.form.get('type').value,
+        name: this.form.get('name').value,
         description: this.form.get('description').value,
         updatedByUserId: localStorage.getItem('currentUserId')
       };
 
-      this.contactTypeService.update(this.id, body)
+      this.associationService.update(this.id, body)
         .pipe(first())
         .subscribe((data) => {
 
@@ -124,7 +118,7 @@ export class AddEditComponent implements OnInit {
               showConfirmButton: false,
               timer: 1500
             });
-            this.router.navigate(['/administration/contact-types']);
+            this.router.navigate(['/administration/associations']);
           } else {
             Swal.fire({
               icon: 'error',
@@ -134,23 +128,7 @@ export class AddEditComponent implements OnInit {
         })
         .add(() => this.loading = false);
     } else {
-      this.router.navigate(['/administration/contact-types']);
+      this.router.navigate(['/administration/associations']);
     }
-  }
-
-  contactTypes = new Map();
-  _contactTypes: any;
-
-  getContactTypeRecords() {
-    this.contactTypeService.getAll()
-      .subscribe(data => {
-        this._contactTypes = data;
-        for (const rec of this._contactTypes) {
-          this.contactTypes.set(rec['type'], rec['description']);
-        }
-
-        console.log(this.contactTypes);
-
-      });
   }
 }

@@ -1,18 +1,19 @@
-import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
-import {ContactTypeService} from '../services/contact-type.service';
-import {ButtonRendererComponent} from './renderer/button-renderer.component';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { UserRoleService } from '../services/user-role.service';
+import { ButtonRendererComponent } from './renderer/button-renderer.component';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {DatePipe} from '@angular/common';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-contact-types',
-  templateUrl: './contact-types.component.html',
-  styleUrls: ['./contact-types.component.css'],
+  selector: 'app-user-roles',
+  templateUrl: './user-roles.component.html',
+  styleUrls: ['./user-roles.component.css'],
   providers: [DatePipe]
 })
-export class ContactTypesComponent implements OnInit {
-  @ViewChild('view_record', {static: false}) viewRecordElmRef: ElementRef;
+export class UserRolesComponent implements OnInit {
+  // @ts-ignore
+  @ViewChild('view_record', {}) viewRecordElmRef: ElementRef;
   records;
   private gridApi;
   private gridColumnApi;
@@ -25,13 +26,11 @@ export class ContactTypesComponent implements OnInit {
   pageSize = 10;
   _record;
 
-  constructor(
-    private contactTypeService: ContactTypeService,
-    private modalService: NgbModal,
-    private datePipe: DatePipe,
-    private spinnerService: NgxSpinnerService
-  ) {
-    this.context = {componentParent: this};
+  constructor(private http: HttpClient, private userRoleService: UserRoleService, private modalService: NgbModal, private datePipe:DatePipe) {
+
+    this.context = {
+      componentParent: this
+    };
 
     this.frameworkComponents = {
       buttonRenderer: ButtonRendererComponent,
@@ -44,33 +43,24 @@ export class ContactTypesComponent implements OnInit {
         width: 50
       },
       {
-        field: 'type',
+        field: 'name',
         headerName: 'Name',
         width: 100
       },
       {
-        field: 'description',
-        headerName: 'Description',
-        width: '100'
-
-      },
-      {
         field: 'updatedBy',
         headerName: 'Updated By',
-        width: '80'
       },
       {
         field: 'updateDate',
         headerName: 'Last Modified',
         cellRenderer: (params) => {
-          return this.datePipe.transform(params.data.updateDate, 'yyyy-MM-dd  h:mm:ss');
-        },
-        width: '100'
+          return this.datePipe.transform( params.data.updateDate,'yyyy-MM-dd  h:mm:ss');
+        }
       },
       {
         headerName: 'Action(s)',
         cellRenderer: 'buttonRenderer',
-        width: 80,
         valueGetter: function (params) {
           return {
             _id: params.data.id,
@@ -86,6 +76,7 @@ export class ContactTypesComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   onGridReady(params) {
@@ -93,18 +84,24 @@ export class ContactTypesComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
     this.gridApi.sizeColumnsToFit();
 
-    this.contactTypeService.getAll()
+    this.userRoleService.getAll()
       .subscribe(data => this.rowData = data);
-
     this.gridApi.setDomLayout('autoHeight');
+    /*
+    this.http
+      .get('http://localhost:58639/api/ContactType/GetPosts')
+      .subscribe((data) => {
+        this.rowData = data;
+        this.gridApi.sizeColumnsToFit();
+      }); */
   }
 
-  viewRecord(id) {
-    this.spinnerService.show();
-    this.contactTypeService.getById(id).subscribe((data) => {
+
+  viewRecord(id){
+    this.userRoleService.getById(id).subscribe((data) => {
       console.log(data);
-      this.spinnerService.hide();
       this._record = data;
+
       this.modalService.open(this.viewRecordElmRef, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
         this.closeResult = `Closed with: ${result}`;
       }, (reason) => {
@@ -134,7 +131,7 @@ export class ContactTypesComponent implements OnInit {
   onBtCSVExport() {
     const params = {
       columnKeys: ['id', 'type', 'description', 'updatedBy', 'updatedAt'],
-      fileName: 'Contact Types'
+      fileName: 'User Roles'
     };
     this.gridApi.exportDataAsCsv(params);
   }
@@ -147,3 +144,5 @@ export class ContactTypesComponent implements OnInit {
     this.gridApi.setQuickFilter(val);
   }
 }
+
+

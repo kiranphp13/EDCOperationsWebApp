@@ -1,34 +1,70 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ContactTypesComponent} from './contact-types/contact-types.component';
 import {AdministrationRoutingModule} from './administration-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
-import {AddEditComponent} from './contact-types/add-edit.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-// ag-grid
 import {AgGridModule} from 'ag-grid-angular';
-import {ButtonRendererComponent} from './contact-types/renderer/button-renderer.component';
-import {ButtonRendererComponent as EDCUsersButtonRendererComponent} from './edcusers/renderer/button-renderer.component';
-import {CollateralsComponent} from './collaterals/collaterals.component';
-import {AssociationsComponent} from './associations/associations.component';
-import {EdcusersComponent} from './edcusers/edcusers.component';
-import {AddUserComponent} from './edcusers/add-user/add-user.component';
-import {EditUserComponent} from './edcusers/edit-user/edit-user.component';
 import {SharedModule} from 'src/app/shared/shared.module';
 import {ModalModule} from 'src/app/_modal';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {NgxSpinnerModule} from 'ngx-spinner';
 
+
+// 1 Users
+import {EdcusersComponent} from './edcusers/edcusers.component';
+import {AddUserComponent} from './edcusers/add-user/add-user.component';
+import {EditUserComponent} from './edcusers/edit-user/edit-user.component';
+import {ButtonRendererComponent as EDCUsersButtonRendererComponent} from './edcusers/renderer/button-renderer.component';
+
+// 2 Contact Type
+import {ContactTypesComponent} from './contact-types/contact-types.component';
+import {AddEditComponent as ContactTypeAddEditComponent} from './contact-types/add-edit.component';
+import {ButtonRendererComponent as ContactTypeButtonRendererComponent} from './contact-types/renderer/button-renderer.component';
+
+// 3 Collateral
+import {CollateralsComponent} from './collaterals/collaterals.component';
+import {AddEditComponent as CollateralAddEditComponent} from './collaterals/add-edit.component';
+import {ButtonRendererComponent as CollateralsButtonRendererComponent} from './collaterals/renderer/button-renderer.component';
+
+
+// 4 Association
+import {AssociationsComponent} from './associations/associations.component';
+import {AddEditComponent as AssociationAddEditComponent} from './associations/add-edit.component';
+import {ButtonRendererComponent as AssociationsButtonRendererComponent} from './associations/renderer/button-renderer.component';
+
+// 5 User Role
+import {UserRolesComponent} from './user-roles/user-roles.component';
+import {AddEditComponent as UserRoleAddEditComponent} from './user-roles/add-edit.component';
+import {ButtonRendererComponent as UserRoleButtonRendererComponent} from './user-roles/renderer/button-renderer.component';
+
+// 6 User Status
+import {UserStatusesComponent} from './user-statuses/user-statuses.component';
+import {AddEditComponent as UserStatusAddEditComponent} from './user-statuses/add-edit.component';
+import {ButtonRendererComponent as UserStatusButtonRendererComponent} from './user-statuses/renderer/button-renderer.component';
+
 @NgModule({
-  declarations: [ContactTypesComponent,
-    AddEditComponent,
-    ButtonRendererComponent, EDCUsersButtonRendererComponent,
-    CollateralsComponent, AssociationsComponent,
+  declarations: [
     EdcusersComponent,
     AddUserComponent,
-    EditUserComponent
+    EditUserComponent,
+    EDCUsersButtonRendererComponent,
+    ContactTypesComponent,
+    ContactTypeAddEditComponent,
+    ContactTypeButtonRendererComponent,
+    CollateralsButtonRendererComponent,
+    AssociationsButtonRendererComponent,
+    CollateralsComponent,
+    CollateralAddEditComponent,
+    AssociationsComponent,
+    AssociationAddEditComponent,
+    UserRolesComponent,
+    UserRoleAddEditComponent,
+    UserRoleButtonRendererComponent,
+    UserStatusesComponent,
+    UserStatusAddEditComponent,
+    UserStatusButtonRendererComponent
   ],
   imports: [
     AdministrationRoutingModule,
@@ -36,7 +72,14 @@ import {NgxSpinnerModule} from 'ngx-spinner';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AgGridModule.withComponents([ButtonRendererComponent, EDCUsersButtonRendererComponent]),
+    AgGridModule.withComponents([
+      EDCUsersButtonRendererComponent,
+      ContactTypeButtonRendererComponent,
+      CollateralsButtonRendererComponent,
+      AssociationsButtonRendererComponent,
+      UserRoleButtonRendererComponent,
+      UserStatusButtonRendererComponent
+    ]),
     NgbModule,
     SharedModule,
     ModalModule,

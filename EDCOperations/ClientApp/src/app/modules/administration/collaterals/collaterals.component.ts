@@ -1,9 +1,10 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { CollateralService } from '../services/collateral.service';
-import { ButtonRendererComponent } from './renderer/button-renderer.component';
+import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {CollateralService} from '../services/collateral.service';
+import {ButtonRendererComponent} from './renderer/button-renderer.component';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-collaterals',
@@ -26,7 +27,13 @@ export class CollateralsComponent implements OnInit {
   pageSize = 10;
   _record;
 
-  constructor(private http: HttpClient, private collateralService: CollateralService, private modalService: NgbModal, private datePipe:DatePipe) {
+  constructor(
+    private http: HttpClient,
+    private collateralService: CollateralService,
+    private modalService: NgbModal,
+    private datePipe: DatePipe,
+    private spinnerService: NgxSpinnerService
+  ) {
 
     this.context = {
       componentParent: this
@@ -59,18 +66,18 @@ export class CollateralsComponent implements OnInit {
         field: 'updateDate',
         headerName: 'Last Modified',
         cellRenderer: (params) => {
-          return this.datePipe.transform( params.data.updateDate,'yyyy-MM-dd  h:mm:ss');
+          return this.datePipe.transform(params.data.updateDate, 'yyyy-MM-dd  h:mm:ss');
         }
       },
       {
         headerName: 'Action(s)',
-        // cellRenderer: 'buttonRenderer',
-        // valueGetter: function (params) {
-        //   return {
-        //     _id: params.data.id,
-        //     params: params
-        //   };
-        // },
+        cellRenderer: 'buttonRenderer',
+        valueGetter: function (params) {
+          return {
+            _id: params.data.id,
+            params: params
+          };
+        },
       },
     ];
     this.defaultColDef = {
@@ -90,6 +97,8 @@ export class CollateralsComponent implements OnInit {
 
     this.collateralService.getAll()
       .subscribe(data => this.rowData = data);
+
+    this.gridApi.setDomLayout('autoHeight');
     /*
     this.http
       .get('http://localhost:58639/api/ContactType/GetPosts')
@@ -100,36 +109,38 @@ export class CollateralsComponent implements OnInit {
   }
 
 
-  // viewRecord(id){
-  //   this.contactTypeService.getById(id).subscribe((data) => {
-  //     console.log(data);
-  //     this._record = data;
-  //
-  //     this.modalService.open(this.viewRecordElmRef, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-  //       this.closeResult = `Closed with: ${result}`;
-  //     }, (reason) => {
-  //       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //     });
-  //   });
-  // }
-  //
-  // open(content) {
-  //   this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-  //     this.closeResult = `Closed with: ${result}`;
-  //   }, (reason) => {
-  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //   });
-  // }
-  //
-  // private getDismissReason(reason: any): string {
-  //   if (reason === ModalDismissReasons.ESC) {
-  //     return 'by pressing ESC';
-  //   } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-  //     return 'by clicking on a backdrop';
-  //   } else {
-  //     return `with: ${reason}`;
-  //   }
-  // }
+  viewRecord(id) {
+    this.spinnerService.show();
+    this.collateralService.getById(id).subscribe((data) => {
+      console.log(data);
+      this._record = data;
+      this.spinnerService.hide();
+
+      this.modalService.open(this.viewRecordElmRef, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    });
+  }
+
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 
   onBtCSVExport() {
     const params = {

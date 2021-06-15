@@ -3,10 +3,12 @@ import {ICellRendererAngularComp} from 'ag-grid-angular';
 import {ICellRendererParams, IAfterGuiAttachedParams} from 'ag-grid-community';
 
 @Component({
-  selector: 'app-c-type-button-renderer',
+  selector: 'app-collateral-button-renderer',
   template: `
-    <button class="btn btn-sm btn-primary" [routerLink]="['/contact-types/edit', _id]">Edit</button> &nbsp;
-    <button class="btn btn-sm btn-primary" (click)="vRecord()">View</button>`
+
+    <span *ngIf="loggedUserRole==='Admin'"><button class="btn btn-sm btn-link" [routerLink]="['/administration/associations/edit', _id]">Edit</button>&nbsp;</span>
+
+    <button class="btn btn-sm btn-link" (click)="vRecord()">View</button>`
 })
 
 export class ButtonRendererComponent implements ICellRendererAngularComp {
@@ -14,11 +16,14 @@ export class ButtonRendererComponent implements ICellRendererAngularComp {
   label: string;
   _id;
   componentParent: any;
-
+  loggedUserRole;
   agInit(params): void {
     this.params = params;
     this._id = params['value']['_id'];
     this.componentParent = this.params.context.componentParent;
+
+    this.loggedUserRole = localStorage.getItem('currentUserRole');
+
   }
 
   onClick() {
@@ -28,7 +33,7 @@ export class ButtonRendererComponent implements ICellRendererAngularComp {
     return false;
   }
 
-  vRecord(){
+  vRecord() {
     this.componentParent.viewRecord(this._id);
     //alert('test');
   }

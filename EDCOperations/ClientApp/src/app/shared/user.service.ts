@@ -11,7 +11,8 @@ export class UserService {
   }
 
   storeUserData(data) {
-    //TODO Decode JWT Token
+    // TODO Decode JWT Token
+    // Currently Backend API Token don't have any user information
     localStorage.setItem('currentUser', data.user);
     localStorage.setItem('token', data.token);
     localStorage.setItem('currentUserFullName', data.user.fullName);
@@ -28,7 +29,7 @@ export class UserService {
   }
 
   getUserFullName(){
-    return localStorage.getItem('currentUserFullName')
+    return localStorage.getItem('currentUserFullName');
   }
 
   getloggedUserRole(){

@@ -64,13 +64,13 @@ export class AssociationsComponent implements OnInit {
       },
       {
         headerName: 'Action(s)',
-        // cellRenderer: 'buttonRenderer',
-        // valueGetter: function (params) {
-        //   return {
-        //     _id: params.data.id,
-        //     params: params
-        //   };
-        // },
+        cellRenderer: 'buttonRenderer',
+        valueGetter: function (params) {
+          return {
+            _id: params.data.id,
+            params: params
+          };
+        },
       },
     ];
     this.defaultColDef = {
@@ -90,6 +90,7 @@ export class AssociationsComponent implements OnInit {
 
     this.associationService.getAll()
       .subscribe(data => this.rowData = data);
+    this.gridApi.setDomLayout('autoHeight');
     /*
     this.http
       .get('http://localhost:58639/api/ContactType/GetPosts')
@@ -100,36 +101,36 @@ export class AssociationsComponent implements OnInit {
   }
 
 
-  // viewRecord(id){
-  //   this.contactTypeService.getById(id).subscribe((data) => {
-  //     console.log(data);
-  //     this._record = data;
-  //
-  //     this.modalService.open(this.viewRecordElmRef, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-  //       this.closeResult = `Closed with: ${result}`;
-  //     }, (reason) => {
-  //       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //     });
-  //   });
-  // }
-  //
-  // open(content) {
-  //   this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-  //     this.closeResult = `Closed with: ${result}`;
-  //   }, (reason) => {
-  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //   });
-  // }
-  //
-  // private getDismissReason(reason: any): string {
-  //   if (reason === ModalDismissReasons.ESC) {
-  //     return 'by pressing ESC';
-  //   } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-  //     return 'by clicking on a backdrop';
-  //   } else {
-  //     return `with: ${reason}`;
-  //   }
-  // }
+  viewRecord(id){
+    this.associationService.getById(id).subscribe((data) => {
+      console.log(data);
+      this._record = data;
+
+      this.modalService.open(this.viewRecordElmRef, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    });
+  }
+
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 
   onBtCSVExport() {
     const params = {
