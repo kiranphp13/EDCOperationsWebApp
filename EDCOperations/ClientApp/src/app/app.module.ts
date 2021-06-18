@@ -27,10 +27,13 @@ import {MarketingModule} from './modules/marketing/marketing.module';
 import {OrderProcessingModule} from './modules/order-processing/order-processing.module';
 import {ContactsModule} from './modules/contacts/contacts.module';
 
+import {SupportModule} from './modules/support/support.module';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { NgxSpinnerModule } from "ngx-spinner";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {NgxSpinnerModule} from 'ngx-spinner';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AuthGuard} from './shared/auth.guard';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MarketingModule,
     OrderProcessingModule,
     ContactsModule,
-
+    SupportModule,
     SharedModule,
     // TODO : Move below components to Feature Module (PagesModule)
     RouterModule.forRoot([
@@ -65,12 +68,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
-      {path: 'dashboard', component: DashboardComponent},
-      {path: 'profile', component: ProfileComponent},
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [AuthGuard],
+        data: {
+          roles: ['Admin', 'Editor', 'Reader']
+        }
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        canActivate: [AuthGuard],
+        data: {
+          roles: ['Admin', 'Editor', 'Reader']
+        }
+      },
       {path: 'notauthorized', component: NotauthorizedComponent},
       {path: 'forgotpassword', component: ForgotPasswordComponent},
       {path: 'resetpassword', component: ResetPasswordComponent},
-      { path: '', redirectTo: '/login', pathMatch: 'full' },
+      {path: '', redirectTo: '/login', pathMatch: 'full'},
     ])
   ],
   providers: [AuthService],

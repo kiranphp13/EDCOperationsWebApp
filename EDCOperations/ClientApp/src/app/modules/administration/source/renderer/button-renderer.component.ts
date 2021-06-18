@@ -3,11 +3,11 @@ import {ICellRendererAngularComp} from 'ag-grid-angular';
 import {ICellRendererParams, IAfterGuiAttachedParams} from 'ag-grid-community';
 
 @Component({
-  selector: 'app-collateral-button-renderer',
+  selector: 'app-source-button-renderer',
   template: `
 
-    <a *ngIf="loggedUserRole==='Admin'" class="mr-2" [routerLink]="['/administration/user-statuses/edit', _id]">Edit</a>
-
+<!--    <span *ngIf="loggedUserRole==='Admin'"><a class="mr-2" [routerLink]="['/administration/associations/edit', _id]">Edit</a>&nbsp;</span>-->
+    <span *ngIf="loggedUserRole==='Admin'"><a class="mr-2" [routerLink]="">Edit</a>&nbsp;</span>
     <a href="javascript: void(0);" class="" (click)="vRecord()">View</a>`
 })
 
@@ -22,7 +22,6 @@ export class ButtonRendererComponent implements ICellRendererAngularComp {
     this._id = params['value']['_id'];
     this.componentParent = this.params.context.componentParent;
     this.loggedUserRole = this.componentParent.getUserRoleName();
-
   }
 
   onClick() {

@@ -14,7 +14,111 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]="{ show: isExpanded }">
-      <div *ngIf="loggedUserRole=== 'Admin'">
+      <!-- Admin Navigation Starts here-->
+      <div *ngIf="isAdmin">
+        <ul class="navbar-nav flex-grow">
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['dashboard']">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['training']">Training</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['support']">Support</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['marketing']">Marketing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['order-processing']">Order Processing</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['contacts']">Contacts</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+              Administration
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" [routerLink]="['administration/edc-users']">EDC Users</a></li>
+              <li><a class="dropdown-item" [routerLink]="['administration/user-roles']">EDC User Roles</a></li>
+              <li><a class="dropdown-item" [routerLink]="['administration/user-statuses']">User Status</a></li>
+              <hr>
+              <li><a class="dropdown-item" [routerLink]="['administration/source']">Source</a></li>
+              <li><a class="dropdown-item" [routerLink]="['administration/contact-category']">Contact Category</a></li>
+              <li><a class="dropdown-item" [routerLink]="['administration/contact-types']">Contact Types</a></li>
+              <li><a class="dropdown-item" [routerLink]="['administration/collaterals']">Collateral</a></li>
+              <li><a class="dropdown-item" [routerLink]="['administration/associations']">Associations</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+              Hi {{currentUser.fullName}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" [routerLink]="['profile']">Profile</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" [routerLink]="" (click)="logout()">Logout</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- Admin Navigation ends here-->
+
+      <!-- Editor Navigation Starts here-->
+      <div *ngIf="isEditor">
+        <ul class="navbar-nav flex-grow">
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['dashboard']">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['training']">Training</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="">Support</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['marketing']">Marketing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['order-processing']">Order Processing</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['contacts']">Contacts</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+              Administration
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" [routerLink]="['administration/source']">Source</a></li>
+              <li><a class="dropdown-item" [routerLink]="['administration/contact-category']">Contact Category</a></li>
+              <li><a class="dropdown-item" [routerLink]="['administration/contact-types']">Contact Types</a></li>
+              <li><a class="dropdown-item" [routerLink]="['administration/collaterals']">Collateral</a></li>
+              <li><a class="dropdown-item" [routerLink]="['administration/associations']">Associations</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+              Hi {{currentUser.fullName}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" [routerLink]="['profile']">Profile</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" [routerLink]="" (click)="logout()">Logout</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Reader Navigation Starts here-->
+      <div *ngIf="isReader">
         <ul class="navbar-nav flex-grow">
           <li class="nav-item">
             <a class="nav-link text-dark" [routerLink]="['dashboard']">Dashboard</a>
@@ -37,10 +141,6 @@
               Administration
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" [routerLink]="['administration/edc-users']">EDC Users</a></li>
-              <li><a class="dropdown-item" [routerLink]="['administration/user-roles']">EDC User Roles</a></li>
-              <li><a class="dropdown-item" [routerLink]="['administration/user-statuses']">User Status</a></li>
-              <hr>
               <li><a class="dropdown-item" [routerLink]="['administration/source']">Source</a></li>
               <li><a class="dropdown-item" [routerLink]="['administration/contact-category']">Contact Category</a></li>
               <li><a class="dropdown-item" [routerLink]="['administration/contact-types']">Contact Types</a></li>
@@ -48,76 +148,15 @@
               <li><a class="dropdown-item" [routerLink]="['administration/associations']">Associations</a></li>
             </ul>
           </li>
-          <li class="nav-item dropdown" *ngIf="isAuthorized">
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
-              Hi {{username}}
+              Hi {{currentUser.fullName}}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" [routerLink]="['profile']">Profile</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="" (click)="logout()">Logout</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <div *ngIf="loggedUserRole=== 'Editor'">
-        <ul class="navbar-nav flex-grow">
-          <li class="nav-item">
-            <a class="nav-link text-dark" [routerLink]="['dashboard']">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" [routerLink]="['training']">Training</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" [routerLink]="['marketing']">Marketing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" [routerLink]="['order-processing']">Order Processing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" [routerLink]="['contacts']">Contacts</a>
-          </li>
-          <li class="nav-item dropdown" *ngIf="isAuthorized">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-              Hi {{username}}
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" [routerLink]="['profile']">Profile</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="" (click)="logout()">Logout</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div *ngIf="loggedUserRole=== 'Reader'">
-        <ul class="navbar-nav flex-grow">
-          <li class="nav-item">
-            <a class="nav-link text-dark" [routerLink]="['dashboard']">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" [routerLink]="['training']">Training</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" [routerLink]="['marketing']">Marketing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" [routerLink]="['order-processing']">Order Processing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" [routerLink]="['contacts']">Contacts</a>
-          </li>
-          <li class="nav-item dropdown" *ngIf="isAuthorized">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-              Hi {{username}}
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" [routerLink]="['profile']">Profile</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="" (click)="logout()">Logout</a>
+              <a class="dropdown-item" [routerLink]="" (click)="logout()">Logout</a>
             </div>
           </li>
         </ul>

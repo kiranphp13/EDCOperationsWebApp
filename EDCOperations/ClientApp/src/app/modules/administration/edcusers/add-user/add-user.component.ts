@@ -40,11 +40,7 @@ export class AddUserComponent implements OnInit {
       .subscribe(data => {
         this.status = data;
       });
-    if (localStorage.getItem('currentUser') === null) {
-      this.router.navigate(['login']);
-    } else if (localStorage.getItem('currentUserRole') !== 'Admin') {
-      this.router.navigate(['notauthorized']);
-    }
+
     this.addForm = this.formBuilder.group({
       id: ['1'],
       userName: ['', Validators.required],

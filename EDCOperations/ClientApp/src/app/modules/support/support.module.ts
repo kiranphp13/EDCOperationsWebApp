@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SupportComponent } from './support/support.component';
-
+import {SupportRoutingModule} from './support-routing.module';
 
 
 @NgModule({
   declarations: [SupportComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    SupportRoutingModule
   ]
 })
 export class SupportModule { }

@@ -44,6 +44,8 @@ import {UserStatusesComponent} from './user-statuses/user-statuses.component';
 import {AddEditComponent as UserStatusAddEditComponent} from './user-statuses/add-edit.component';
 import {ButtonRendererComponent as UserStatusButtonRendererComponent} from './user-statuses/renderer/button-renderer.component';
 import { SourceComponent } from './source/source.component';
+import {ButtonRendererComponent as SourceButtonRendererComponent} from './source/renderer/button-renderer.component';
+
 import { ContactCategoryComponent } from './contact-category/contact-category.component';
 
 @NgModule({
@@ -68,6 +70,7 @@ import { ContactCategoryComponent } from './contact-category/contact-category.co
     UserStatusAddEditComponent,
     UserStatusButtonRendererComponent,
     SourceComponent,
+    SourceButtonRendererComponent,
     ContactCategoryComponent
   ],
   imports: [
@@ -82,7 +85,8 @@ import { ContactCategoryComponent } from './contact-category/contact-category.co
       CollateralsButtonRendererComponent,
       AssociationsButtonRendererComponent,
       UserRoleButtonRendererComponent,
-      UserStatusButtonRendererComponent
+      UserStatusButtonRendererComponent,
+      SourceButtonRendererComponent
     ]),
     NgbModule,
     SharedModule,

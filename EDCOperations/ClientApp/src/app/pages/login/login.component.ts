@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {LoginService} from '../../services/login.service';
 import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {UserService} from '../../shared/user.service';
@@ -16,13 +15,15 @@ export class LoginComponent implements OnInit {
 
   errorMessage: string;
 
-  constructor(private router: Router, private loginService: LoginService, private userService: UserService) {
+  constructor(private router: Router, private userService: UserService) {
+
   }
 
   fieldTextType: boolean;
   repeatFieldTextType: boolean;
 
   ngOnInit() {
+    this.userService.checkUser();
   }
 
   toggleFieldTextType() {
@@ -34,16 +35,16 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.loginService.Login(this.model).subscribe(
+    this.userService.login(this.model).subscribe(
       data => {
         if (data.Status === 'Success') {
-          this.userService.storeUserData(data);
-          // this.router.navigate(['dashboard']);
+          // this.userService.storeUserData(data);
+          this.router.navigate(['dashboard']);
 
-          this.router.navigate(['dashboard'])
-            .then(() => {
-              window.location.reload();
-            });
+          // this.router.navigate(['dashboard'])
+          //   .then(() => {
+          //     window.location.reload();
+          //   });
 
         } else {
           this.errorMessage = data.Message;

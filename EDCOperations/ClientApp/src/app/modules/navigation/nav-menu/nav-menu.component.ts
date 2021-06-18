@@ -4,11 +4,9 @@ import {LoginService} from 'src/app/services/login.service';
 import {AuthService} from 'src/app/services/auth.service';
 import {UserService} from 'src/app/shared/user.service';
 
-
 document.addEventListener('DOMContentLoaded', function () {
   // make it as accordion for smaller screens
   if (window.innerWidth < 992) {
-
     // close all inner dropdowns when parent is closed
     document.querySelectorAll('.navbar .dropdown').forEach(function (everydropdown) {
       everydropdown.addEventListener('hidden.bs.dropdown', function () {
@@ -50,12 +48,27 @@ export class NavMenuComponent {
   isExpanded = false;
   username = '';
   loggedUserRole;
+  currentUser: any;
 
   constructor(private router: Router, private loginService: LoginService, private authService: AuthService, private userService: UserService) {
+    this.userService.currentUser.subscribe(x => this.currentUser = x);
+
     this.loggedUserRole = this.userService.getloggedUserRole();
-    if(this.loggedUserRole === null || this.loggedUserRole.length === 0 || this.loggedUserRole === undefined){
-      this.router.navigate(['/login']);
-    }
+    // if(this.loggedUserRole === null || this.loggedUserRole.length === 0 || this.loggedUserRole === undefined){
+    //   this.router.navigate(['/login']);
+    // }
+  }
+
+  get isAdmin() {
+    return this.currentUser && this.currentUser.role === 'Admin';
+  }
+
+  get isReader() {
+    return this.currentUser && this.currentUser.role === 'Reader';
+  }
+
+  get isEditor() {
+    return this.currentUser && this.currentUser.role === 'Editor';
   }
 
   collapse() {
@@ -76,21 +89,13 @@ export class NavMenuComponent {
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit() {
-    if (!this.isAuthorized) {
-      this.router.navigate(['login']);
-    }
-  }
-
-  get isAdmin() {
-    return this.authService.isAdmin();
-  }
-
-  get isReader() {
-    return this.authService.isReader();
+    // if (!this.isAuthorized) {
+    //   this.router.navigate(['login']);
+    // }
   }
 
   logout() {
-    this.loginService.Logout();
+    this.userService.logout();
     this.router.navigate(['/login']);
   }
 }

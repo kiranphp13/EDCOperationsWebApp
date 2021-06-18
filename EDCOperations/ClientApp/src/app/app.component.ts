@@ -11,17 +11,13 @@ import { UserService } from 'src/app/shared/user.service';
 export class AppComponent {
   title = 'app';
   loggedUserRole = null;
+  currentUser: any;
   constructor(private router: Router, private authService: AuthService, private userService: UserService) {
-    this.loggedUserRole = this.userService.getloggedUserRole();
+    this.userService.currentUser.subscribe(x => this.currentUser = x);
+    console.log(this.currentUser);
   }
-  //get isAuthorized() {
-  //  return this.authService.isAuthorized();
-  //}
-  //get isAdmin() {
-  //  return this.authService.hasRole(Role.Admin);
-  //}
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['login']);
+
+  get isAdmin() {
+    return this.currentUser && this.currentUser.role === 'Admin';
   }
 }

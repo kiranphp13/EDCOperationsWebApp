@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from '../../shared/auth.guard';
 
 // 1 Users
 import {EdcusersComponent} from './edcusers/edcusers.component';
@@ -30,32 +31,158 @@ import {SourceComponent} from './source/source.component';
 import {ContactCategoryComponent} from './contact-category/contact-category.component';
 
 const routes: Routes = [
-  {path: 'administration/edc-users', component: EdcusersComponent},
-  {path: 'administration/edc-users/add', component: AddUserComponent},
-  {path: 'administration/edc-users/edit/:id', component: EditUserComponent},
+  {
+    path: 'administration/edc-users',
+    component: EdcusersComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Admin']
+    }
+  },
+  {
+    path: 'administration/edc-users/add',
+    component: AddUserComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Admin']
+    }
+  },
+  {
+    path: 'administration/edc-users/edit/:id',
+    component: EditUserComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Admin']
+    }
+  },
 
-  {path: 'administration/contact-types', component: ContactTypesComponent},
-  {path: 'administration/contact-types/add', component: ContactTypeAddEditComponent},
-  {path: 'administration/contact-types/edit/:id', component: ContactTypeAddEditComponent},
+  {
+    path: 'administration/contact-types',
+    component: ContactTypesComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Admin', 'Editor', 'Reader']
+    }
+  },
+  {
+    path: 'administration/contact-types/add',
+    component: ContactTypeAddEditComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Admin']
+    }
+  },
+  {
+    path: 'administration/contact-types/edit/:id',
+    component: ContactTypeAddEditComponent,
+    data: {
+      roles: ['Admin']
+    }
+  },
 
-  {path: 'administration/collaterals', component: CollateralsComponent},
-  {path: 'administration/collaterals/add', component: CollateralAddEditComponent},
-  {path: 'administration/collaterals/edit/:id', component: CollateralAddEditComponent},
+  {
+    path: 'administration/collaterals',
+    component: CollateralsComponent,
+    data: {
+      roles: ['Admin', 'Editor', 'Reader']
+    }
+  },
+  {
+    path: 'administration/collaterals/add',
+    component: CollateralAddEditComponent,
+    data: {
+      roles: ['Admin']
+    }
+  },
+  {
+    path: 'administration/collaterals/edit/:id',
+    component: CollateralAddEditComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Admin']
+    }
+  },
 
-  {path: 'administration/associations', component: AssociationsComponent},
-  {path: 'administration/associations/add', component: AssociationAddEditComponent},
-  {path: 'administration/associations/edit/:id', component: AssociationAddEditComponent},
+  {
+    path: 'administration/associations',
+    component: AssociationsComponent,
+    data: {
+      roles: ['Admin', 'Editor', 'Reader']
+    }
+  },
+  {
+    path: 'administration/associations/add',
+    component: AssociationAddEditComponent,
+    data: {
+      roles: ['Admin']
+    }
+  },
+  {
+    path: 'administration/associations/edit/:id',
+    component: AssociationAddEditComponent,
+    data: {
+      roles: ['Admin']
+    }
+  },
 
-  {path: 'administration/user-roles', component: UserRolesComponent},
-  {path: 'administration/user-roles/add', component: UserRoleAddEditComponent},
-  {path: 'administration/user-roles/edit/:id', component: UserRoleAddEditComponent},
+  {
+    path: 'administration/user-roles',
+    component: UserRolesComponent,
+    data: {
+      roles: ['Admin']
+    }
+  },
+  {
+    path: 'administration/user-roles/add',
+    component: UserRoleAddEditComponent,
+    data: {
+      roles: ['Admin']
+    }
+  },
+  {
+    path: 'administration/user-roles/edit/:id',
+    component: UserRoleAddEditComponent,
+    data: {
+      roles: ['Admin']
+    }
+  },
 
-  {path: 'administration/user-statuses', component: UserStatusesComponent},
-  {path: 'administration/user-statuses/add', component: UserStatusAddEditComponent},
-  {path: 'administration/user-statuses/edit/:id', component: UserStatusAddEditComponent},
+  {
+    path: 'administration/user-statuses',
+    component: UserStatusesComponent,
+    data: {
+      roles: ['Admin']
+    }
+  },
+  {
+    path: 'administration/user-statuses/add',
+    component: UserStatusAddEditComponent,
+    data: {
+      roles: ['Admin']
+    }
+  },
+  {
+    path: 'administration/user-statuses/edit/:id',
+    component: UserStatusAddEditComponent,
+    data: {
+      roles: ['Admin']
+    }
+  },
 
-  {path: 'administration/source', component: SourceComponent},
-  {path: 'administration/contact-category', component: ContactCategoryComponent},
+  {
+    path: 'administration/source',
+    component: SourceComponent,
+    data: {
+      roles: ['Admin', 'Editor', 'Reader']
+    }
+  },
+  {
+    path: 'administration/contact-category',
+    component: ContactCategoryComponent,
+    data: {
+      roles: ['Admin', 'Editor', 'Reader']
+    }
+  },
 
 ];
 

@@ -17,17 +17,18 @@ export class UserRolesComponent implements OnInit {
   // @ts-ignore
   @ViewChild('view_record', {}) viewRecordElmRef: ElementRef;
   records;
-  private gridApi;
-  private gridColumnApi;
-  private columnDefs;
-  private defaultColDef;
-  private rowData: any;
+  public gridApi;
+  public gridColumnApi;
+  public columnDefs;
+  public defaultColDef;
+  public rowData: any;
   frameworkComponents: any;
   closeResult = '';
   context: any;
   pageSize = 10;
   _record;
   loggedUserRole;
+  currentUser: any;
 
   constructor(
     private http: HttpClient,
@@ -38,7 +39,8 @@ export class UserRolesComponent implements OnInit {
     private spinnerService: NgxSpinnerService
   ) {
 
-    this.loggedUserRole = this.userService.getloggedUserRole();
+    this.userService.currentUser.subscribe(x => this.currentUser = x);
+    this.loggedUserRole = this.currentUser.role;
     this.context = {
       componentParent: this
     };
@@ -88,6 +90,10 @@ export class UserRolesComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  getUserRoleName() {
+    return this.loggedUserRole;
   }
 
   onGridReady(params) {

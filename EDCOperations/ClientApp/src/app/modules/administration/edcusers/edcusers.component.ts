@@ -20,21 +20,22 @@ export class EdcusersComponent implements OnInit {
   rowDataClicked2 = {};
   isReader: boolean;
   public defaultColDef;
-  private defaultColGroupDef;
-  private columnTypes;
-  private rowData: [];
+  public defaultColGroupDef;
+  public columnTypes;
+  public rowData: [];
   public columnDefs;
   users: User[];
-  private gridApi;
-  private gridColumnApi;
+  public gridApi;
+  public gridColumnApi;
   isAdmin: boolean;
   searchText: string;
   public paginationPageSize;
-  pageSize: string;
+  pageSize;
   context: any;
   closeResult = '';
   _record;
   loggedUserRole;
+  currentUser: any;
 
   constructor(
     private router: Router,
@@ -43,19 +44,29 @@ export class EdcusersComponent implements OnInit {
     private userService: UserService,
     private spinnerService: NgxSpinnerService
   ) {
+    this.userService.currentUser.subscribe(x => this.currentUser = x);
     this.context = {
       componentParent: this
     };
+
+    const pagingSize = this.userService.getUserSetting('edc_users_paging_size');
+    if (pagingSize != null) {
+      this.pageSize = pagingSize;
+      this.paginationPageSize = pagingSize;
+    } else {
+      this.pageSize = 10;
+      this.paginationPageSize = 10;
+    }
+
+
     this.frameworkComponents = {
       buttonRenderer: ButtonRendererComponent,
     };
     this.defaultColDef = {
       resizable: true
     };
-    this.pageSize = '10';
 
-    this.paginationPageSize = 10;
-    this.loggedUserRole = this.userService.getloggedUserRole();
+    this.loggedUserRole = this.currentUser.role;
 
   }
 
@@ -113,8 +124,8 @@ export class EdcusersComponent implements OnInit {
   }
 
   onPageSizeChanged() {
-    var value = this.pageSize;
-    this.gridApi.paginationSetPageSize(Number(value));
+    this.gridApi.paginationSetPageSize(Number(this.pageSize));
+    this.userService.saveUserSetting('edc_users_paging_size', this.pageSize);
   }
 
 

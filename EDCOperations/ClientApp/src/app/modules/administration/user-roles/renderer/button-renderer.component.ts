@@ -22,7 +22,7 @@ export class ButtonRendererComponent implements ICellRendererAngularComp {
     this._id = params['value']['_id'];
     this.componentParent = this.params.context.componentParent;
 
-    this.loggedUserRole = localStorage.getItem('currentUserRole');
+    this.loggedUserRole = this.componentParent.getUserRoleName();
 
   }
 
