@@ -2,25 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56667d3b-51f1-4b80-b180-17c9769aa12e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/3rdpartylicenses.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/assets/EDC logo_2021Feb01.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/assets/wip.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/assets/wip.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/main-es2015.41da4fd6a59a6c6f608b.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/main-es5.41da4fd6a59a6c6f608b.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/polyfills-es2015.5b10b8fd823b6392f1fd.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/polyfills-es5.8e50a9832860f7cf804a.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/runtime-es2015.c5fa8325f89fc516600b.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/runtime-es5.c5fa8325f89fc516600b.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/scripts.3c9a389f19a1bc782816.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/sort_asc.9326ad44ae4bebdedd14.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/sort_asc_disabled.bda51e15154a18257b4f.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/sort_both.9a6486086d09bb38cf66.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/sort_desc.1fc418e33fd5a6872902.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/sort_desc_disabled.d7dc10c78f23615d3285.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/dist/styles.4abf0ce8a38288fa2428.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDCOperations/ClientApp/src/app/modules/administration/contact-category/contact-category.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/EDCOperations/ClientApp/src/app/modules/administration/contact-category/contact-category.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +40,7 @@
       <updated>1624258936914</updated>
       <workItem from="1624258938139" duration="8669000" />
       <workItem from="1624599174642" duration="25000" />
-      <workItem from="1625666791296" duration="427000" />
+      <workItem from="1625666791296" duration="1617000" />
     </task>
     <servers />
   </component>
