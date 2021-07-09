@@ -4,19 +4,25 @@
       <div class="card-group">
         <div class="card p-4">
           <div class="card-body">
-            <form name="form" (ngSubmit)="login()" #f="ngForm">
+            <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm">
               <h1 style="text-align:center">Login</h1>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fa fa-user"></i></span>
                 </div>
-                <input type="text" name="UserName" [(ngModel)]="model.UserName" class="form-control sty1" placeholder="User Name" required>
+                <input type="text" name="UserName" [(ngModel)]="model.UserName" class="form-control sty1" #UserName="ngModel" placeholder="User Name" [ngClass]="{ 'is-invalid': f.submitted && UserName.invalid }" required>
+                <div *ngIf="f.submitted && UserName.invalid" class="invalid-feedback">
+                  <div *ngIf="UserName.errors.required">UserName is required</div>
+              </div>
               </div>
               <div class="input-group mb-4">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fa fa-key"></i></span>
                 </div>
-                <input [type]="fieldTextType ? 'text' : 'password'" name="Passward" [(ngModel)]="model.Password" class="form-control" placeholder="Password">
+                <input [type]="fieldTextType ? 'text' : 'password'" name="Passward" [(ngModel)]="model.Password" class="form-control"  #Password="ngModel" placeholder="Password" [ngClass]="{ 'is-invalid': f.submitted && Password.invalid }" required>
+                <div *ngIf="f.submitted && Password.invalid" class="invalid-feedback">
+                  <div *ngIf="Password.errors.required">Password is required</div>
+              </div>
                 <div class="input-group-append">
                   <span class="input-group-text">
                     <i class="fa" [ngClass]="{'fa-eye-slash': !fieldTextType,'fa-eye': fieldTextType}" (click)="toggleFieldTextType()"></i>
